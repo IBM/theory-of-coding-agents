@@ -1,0 +1,209 @@
+{
+    "dataset": {
+        "name": "qiskit_human_eval",
+        "dataset_file": "datasets/qiskit_human_eval.jsonl"
+    },
+    "model": {
+        "model_type": "api",
+        "name": "qwen3-next",
+        "model_path": "qwen3-next",
+        "model_system_prompt": ""
+    },
+    "result_dir": "results/qiskit_human_eval/qwen3-next",
+    "log_dir": "logs/qiskit_human_eval/qwen3-next",
+    "gen_codes": {
+        "rounds": 10,
+        "temperature": 1.0,
+        "max_tokens": 32768
+    },
+    "gen_tests": {
+        "rounds": 10,
+        "temperature": 1.0,
+        "max_tokens": 32768
+    },
+    "thompson_sampling_w_oracle": {
+        "rounds": 10,
+        "factorization":"independent",
+        "provide_tests": true,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": null,
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "insights",
+            "reformulate": true,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "thompson_sampling_ind": {
+        "rounds": 10,
+        "factorization":"independent",
+        "provide_tests": false,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "insights",
+            "reformulate": true,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "thompson_sampling_tf": {
+        "rounds": 10,
+        "factorization":"test_first",
+        "provide_tests": false,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "insights",
+            "reformulate": true,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "thompson_sampling_cf": {
+        "rounds": 10,
+        "factorization":"code_first",
+        "provide_tests": false,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "insights",
+            "reformulate": true,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "thompson_sampling_inds": {
+        "rounds": 10,
+        "factorization":"independent",
+        "provide_tests": false,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "summary",
+            "reformulate": false,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "thompson_sampling_tfs": {
+        "rounds": 10,
+        "factorization":"test_first",
+        "provide_tests": false,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "summary",
+            "reformulate": false,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "thompson_sampling_cfs": {
+        "rounds": 10,
+        "factorization":"code_first",
+        "provide_tests": false,
+        "gen_codes": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_tests": {
+            "temperature": 1.0,
+            "max_tokens": 32768
+        },
+        "gen_reasoning": {
+            "feedback": "line_coverage_and_tests",
+            "compression": "summary",
+            "reformulate": false,
+            "temperature": 1.0,
+            "max_tokens": 32768
+        }
+    },
+    "execute_codes_on_tests": {
+        "code_dir": "gen_codes",
+        "max_code_gens": 10,
+        "test_dir": "gen_tests",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_w_oracle": {
+        "code_dir": "thompson_sampling_w_oracle",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_w_oracle",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_ind": {
+        "code_dir": "thompson_sampling_ind",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_ind",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_tf": {
+        "code_dir": "thompson_sampling_tf",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_tf",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_cf": {
+        "code_dir": "thompson_sampling_cf",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_cf",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_cfs": {
+        "code_dir": "thompson_sampling_cfs",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_cfs",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_tfs": {
+        "code_dir": "thompson_sampling_tfs",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_tfs",
+        "max_test_gens": 10
+    },
+    "execute_thompson_sampling_inds": {
+        "code_dir": "thompson_sampling_inds",
+        "max_code_gens": 10,
+        "test_dir": "thompson_sampling_inds",
+        "max_test_gens": 10
+    }
+}

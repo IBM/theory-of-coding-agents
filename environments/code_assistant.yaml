@@ -1,0 +1,24 @@
+name: code_assistant
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip=25.0
+  - bubblewrap=0.11.0
+  - python=3.11
+  - pip:
+    - vllm
+    - openai
+    - pytest
+    - pytest-cov
+    - pytest-json-report
+    - pytest-timeout
+    - tenacity
+    - gradio
+    - regex
+    - numpy
+    - matplotlib
+    - pandas
+    - scipy
+    - tqdm
+    - tueplots
