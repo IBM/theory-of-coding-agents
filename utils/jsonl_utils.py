@@ -3,12 +3,30 @@ from typing import List, Dict, Union
 import os
 
 
+def _resolve_safe_jsonl_path(file_path: str) -> Union[str, None]:
+    """Resolve and validate a JSONL path under a safe base directory."""
+    base_dir = os.path.realpath(os.environ.get("RESULTS_BASE_DIR", os.getcwd()))
+    candidate_path = os.path.realpath(file_path)
+
+    try:
+        if os.path.commonpath([base_dir, candidate_path]) != base_dir:
+            return None
+    except ValueError:
+        return None
+
+    if not candidate_path.endswith(".jsonl"):
+        return None
+
+    return candidate_path
+
+
 def read_jsonl(file_path: str) -> List[Dict]:
     """Reads a JSONL file and returns a list of dictionaries."""
-    if not os.path.exists(file_path):
+    safe_path = _resolve_safe_jsonl_path(file_path)
+    if not safe_path or not os.path.exists(safe_path):
         return []
     data = []
-    with open(file_path, 'r') as file:
+    with open(safe_path, 'r') as file:
         line = file.readline()
         while line != '':
             line = json.loads(line)
