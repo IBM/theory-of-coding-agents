@@ -1,12 +1,19 @@
+import os
 import gradio as gr
 import numpy as np
 import pandas as pd
 from utils import read_jsonl  # assumes read_jsonl(path) returns a list of dicts with 'code', 'tests', 'scores'
 
+# Only result files under the repository's results/ directory may be loaded
+RESULTS_DIR = os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results"))
+
 def retrieve_data(result_path, max_iteration_round):
-    result = read_jsonl(result_path)
+    full_path = os.path.realpath(os.path.join(RESULTS_DIR, result_path))
+    if os.path.commonpath([full_path, RESULTS_DIR]) != RESULTS_DIR:
+        return "Invalid path: result files must be inside results/.", "", pd.DataFrame()
+    result = read_jsonl(full_path)
     if not result:
-        return "No data found.", pd.DataFrame()
+        return "No data found.", "", pd.DataFrame()
     
     codes = [row['code'] for row in result[:max_iteration_round]]
     scores_matrix = [code['scores'][:max_iteration_round] for code in codes]
@@ -29,7 +36,7 @@ def retrieve_data(result_path, max_iteration_round):
 
 with gr.Blocks() as demo:
     gr.Markdown("# Bayesian Code Assistant")
-    result_path_input = gr.Textbox(label="Result File Path")
+    result_path_input = gr.Textbox(label="Result File Path (relative to results/)")
     round_slider = gr.Slider(label="Maximum Iteration Round", minimum=1, maximum=25, step=1, value=1)
     run_button = gr.Button("Load & Evaluate")
     table_output = gr.Dataframe(label="Code vs Test Suite Matrix", column_widths = ["4%"]*25, )
@@ -42,4 +49,4 @@ with gr.Blocks() as demo:
         outputs=[summary_output, observations_output, table_output]
     )
 
-demo.launch(share=True)
+demo.launch()
