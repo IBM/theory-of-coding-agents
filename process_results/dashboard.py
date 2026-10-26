@@ -1,17 +1,21 @@
+import json
 import os
 import gradio as gr
 import numpy as np
 import pandas as pd
-from utils import read_jsonl  # assumes read_jsonl(path) returns a list of dicts with 'code', 'tests', 'scores'
 
 # Only result files under the repository's results/ directory may be loaded
 RESULTS_DIR = os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results"))
 
 def retrieve_data(result_path, max_iteration_round):
+    # The path comes from the UI, so it is validated and read here rather than passed to read_jsonl
     full_path = os.path.realpath(os.path.join(RESULTS_DIR, result_path))
-    if os.path.commonpath([full_path, RESULTS_DIR]) != RESULTS_DIR:
+    if not full_path.startswith(RESULTS_DIR + os.sep):
         return "Invalid path: result files must be inside results/.", "", pd.DataFrame()
-    result = read_jsonl(full_path)
+    if not os.path.isfile(full_path):
+        return "No data found.", "", pd.DataFrame()
+    with open(full_path, 'r') as file:
+        result = [json.loads(line) for line in file if line.strip()]
     if not result:
         return "No data found.", "", pd.DataFrame()
     
